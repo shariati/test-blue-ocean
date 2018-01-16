@@ -9,6 +9,7 @@ pipeline {
     stage('Build') {
       steps {
         echo 'Build Stage message'
+        archiveArtifacts(artifacts: 'test', allowEmptyArchive: true)
       }
     }
   }
