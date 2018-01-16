@@ -18,7 +18,7 @@ pipeline {
     }
   }
   environment {
-    test = '123'
-    test2 = '234'
+    test = ''
+    test2 = ''
   }
 }
