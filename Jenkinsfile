@@ -1,19 +1,34 @@
 pipeline {
   agent {
     node {
-      label 'Node'
+      label 'linux'
     }
     
   }
   stages {
     stage('Build') {
-      environment {
-        stageVar1 = '123'
-        stageVar2 = '234'
+      parallel {
+        stage('Build') {
+          environment {
+            stageVar1 = '123'
+            stageVar2 = '234'
+          }
+          steps {
+            echo 'Build Stage message'
+            archiveArtifacts(artifacts: 'test', allowEmptyArchive: true)
+          }
+        }
+        stage('build2') {
+          steps {
+            sh './test'
+          }
+        }
       }
+    }
+    stage('Test') {
       steps {
-        echo 'Build Stage message'
-        archiveArtifacts(artifacts: 'test', allowEmptyArchive: true)
+        jiraComment(issueKey: '123', body: '12333')
+        archiveArtifacts(artifacts: '133', allowEmptyArchive: true, defaultExcludes: true)
       }
     }
   }
